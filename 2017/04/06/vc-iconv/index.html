@@ -1,0 +1,906 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="https://cdn.staticfile.org/fancybox/3.0.47/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="编译,libiconv," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="最近需要用到 spatialite，打算在 Windows 下自己编译 libspatialite。官网上有 MinGW how-to、 MinGW64 how-to 和 MSVC how-to 的教程。由于个人喜好，选择用 MSVC。实际操作起来，才发现官方的教程，基于 OSGeo4W，描述过于简略。当然，如果只是实际使用，还是强烈推荐 OSGeo4W，不用自己编译，安装后有现成的静态库和动">
+<meta name="keywords" content="编译,libiconv">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Microsoft Visual Studio 编译生成 libiconv">
+<meta property="og:url" content="http://kongyl.s1.natapp.cc/2017/04/06/vc-iconv/index.html">
+<meta property="og:site_name" content="呆脑兽的博客">
+<meta property="og:description" content="最近需要用到 spatialite，打算在 Windows 下自己编译 libspatialite。官网上有 MinGW how-to、 MinGW64 how-to 和 MSVC how-to 的教程。由于个人喜好，选择用 MSVC。实际操作起来，才发现官方的教程，基于 OSGeo4W，描述过于简略。当然，如果只是实际使用，还是强烈推荐 OSGeo4W，不用自己编译，安装后有现成的静态库和动">
+<meta property="og:image" content="http://onyuwwe9f.bkt.clouddn.com/image/blog/libiconv/1.png">
+<meta property="og:image" content="http://onyuwwe9f.bkt.clouddn.com/image/blog/libiconv/2.png">
+<meta property="og:image" content="http://onyuwwe9f.bkt.clouddn.com/image/blog/libiconv/3.png">
+<meta property="og:image" content="http://onyuwwe9f.bkt.clouddn.com/image/blog/libiconv/4.png">
+<meta property="og:image" content="http://onyuwwe9f.bkt.clouddn.com/image/blog/libiconv/5.png">
+<meta property="og:image" content="http://onyuwwe9f.bkt.clouddn.com/image/blog/libiconv/6.png">
+<meta property="og:image" content="http://onyuwwe9f.bkt.clouddn.com/image/blog/libiconv/7.png">
+<meta property="og:image" content="http://onyuwwe9f.bkt.clouddn.com/image/blog/libiconv/8.png">
+<meta property="og:updated_time" content="2017-04-07T04:59:07.908Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Microsoft Visual Studio 编译生成 libiconv">
+<meta name="twitter:description" content="最近需要用到 spatialite，打算在 Windows 下自己编译 libspatialite。官网上有 MinGW how-to、 MinGW64 how-to 和 MSVC how-to 的教程。由于个人喜好，选择用 MSVC。实际操作起来，才发现官方的教程，基于 OSGeo4W，描述过于简略。当然，如果只是实际使用，还是强烈推荐 OSGeo4W，不用自己编译，安装后有现成的静态库和动">
+<meta name="twitter:image" content="http://onyuwwe9f.bkt.clouddn.com/image/blog/libiconv/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '96EOY3WU0Y',
+      apiKey: '14e98026795deccc182602978bc04382',
+      indexName: 'hexo',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"搜索博客","hits_empty":"没有找到结果：${query}","hits_stats":"${hits} 个结果，用时 ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://kongyl.s1.natapp.cc/2017/04/06/vc-iconv/"/>
+
+
+
+
+
+  <title> Microsoft Visual Studio 编译生成 libiconv | 呆脑兽的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">呆脑兽的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">kongyl@126.com</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://kongyl.s1.natapp.cc/2017/04/06/vc-iconv/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="呆脑兽">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://onyuwwe9f.bkt.clouddn.com/image/face.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="呆脑兽的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Microsoft Visual Studio 编译生成 libiconv
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-06T16:30:50+08:00">
+                2017-04-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Code/" itemprop="url" rel="index">
+                    <span itemprop="name">Code</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>本文总阅读量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>　　最近需要用到 <a href="http://www.gaia-gis.it/gaia-sins/" target="_blank" rel="external">spatialite</a>，打算在 Windows 下自己编译 libspatialite。官网上有 <a href="http://www.gaia-gis.it/gaia-sins/mingw_how_to.html" target="_blank" rel="external">MinGW how-to</a>、 <a href="http://www.gaia-gis.it/gaia-sins/mingw64_how_to.html" target="_blank" rel="external">MinGW64 how-to</a> 和 <a href="http://www.gaia-gis.it/gaia-sins/msvc_how_to.html" target="_blank" rel="external">MSVC how-to</a> 的教程。由于个人喜好，选择用 MSVC。实际操作起来，才发现官方的教程，基于 <a href="http://osgeo4w.osgeo.org/" target="_blank" rel="external">OSGeo4W</a>，描述过于简略。当然，如果只是实际使用，还是强烈推荐 <a href="http://osgeo4w.osgeo.org/" target="_blank" rel="external">OSGeo4W</a>，不用自己编译，安装后有现成的静态库和动态库可供使用。但既然打算自己编译，还是想从依赖库开始。折腾了好久，这里做一个记录。</p>
+<p>　　其实折腾最久的就是刚开始编译的这个 <a href="http://www.gnu.org/software/libiconv/" target="_blank" rel="external">libiconv</a>。libiconv 从貌似从版本 1.11 以后就不支持 namke 编译了。本来都放弃了自己喜欢用最新稳定版这个陋习，打算勉强用 1.11 这个版本，结果在 VS 2015 下还编译失败了。好在找到了 《<a href="https://www.codeproject.com/articles/302012/how-to-build-libiconv-with-microsoft-visual-studio" target="_blank" rel="external">How to Build libiconv with Microsoft Visual Studio</a>》，并且按照此文的方法也能够编译目前最新的 1.15 版本。</p>
+<h2 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h2><p><strong>Visual Studio:</strong> 2015<br><strong>libiconv:</strong> 1.15</p>
+<a id="more"></a>
+<h2 id="编译生成"><a href="#编译生成" class="headerlink" title="编译生成"></a>编译生成</h2><h3 id="第-1-步"><a href="#第-1-步" class="headerlink" title="第 1 步"></a>第 1 步</h3><p>　　<a href="https://ftp.gnu.org/pub/gnu/libiconv/" target="_blank" rel="external">下载</a> libiconv。原教程版本是 1.14，这里用的 1.15 也能成功生成，其他版本没有实际测试过。</p>
+<h3 id="第-2-步"><a href="#第-2-步" class="headerlink" title="第 2 步"></a>第 2 步</h3><p>　　用 Visual Studio 新建 Win32 工程，这里命名工程为 libiconv。在设置向导中选择 <strong>Application type</strong> 为 <strong>DLL</strong>，并在 <strong>Additional options</strong> 中勾选 <strong>Empty project</strong>。</p>
+<p><img src="http://onyuwwe9f.bkt.clouddn.com/image/blog/libiconv/1.png" alt=""></p>
+<p><img src="http://onyuwwe9f.bkt.clouddn.com/image/blog/libiconv/2.png" alt=""></p>
+<h3 id="第-3-步"><a href="#第-3-步" class="headerlink" title="第 3 步"></a>第 3 步</h3><p>　　解压下载的 libiconv-1.15.tar.gz。复制以下文件：</p>
+<ol>
+<li>从解压的文件夹 …\libiconv-1.15\lib\ 中，复制 <strong>relocatable.h、relocatable.c、iconv.c</strong> 到工程文件夹 …\libiconv\libiconv\ 中。</li>
+<li>从解压的文件夹 …\libiconv-1.15\libcharset\lib\ 中，复制 <strong>localcharset.c</strong> 到工程文件夹 …\libiconv\libiconv\ 中。</li>
+<li>从解压的文件夹 …\libiconv-1.15\libcharset\include\ 中，复制 <strong>localcharset.h.build.in</strong> 到工程文件夹 …\libiconv\libiconv\ 中，并重命名为 <strong>localcharset.h</strong>。</li>
+<li>从解压的文件夹 …\libiconv-1.15\windows\ 中，复制 <strong>libiconv.rc</strong> 到工程文件夹 ..\libiconv\libiconv\ 中。</li>
+<li>在工程文件夹 ..\libiconv\ 中创建文件夹 <strong>include</strong>。</li>
+<li>从解压的文件夹 …\libiconv-1.15\include\ 中，复制 <strong>iconv.h.build.in</strong> 到工程文件夹 ..\libiconv\include\ 中，并重命名为 <strong>iconv.h</strong>。</li>
+<li>从解压的文件夹 …\libiconv-1.15\ 中，复制 <strong>config.h.in</strong> 到工程文件夹 ..\libiconv\include\ 中，并重命名为 <strong>config.h</strong>。</li>
+<li>从解压的文件夹 …\libiconv-1.15\lib\ 中，复制所有的头文件（<strong>*.h</strong>）和所有的定义文件（<strong>*.def</strong>）到工程文件夹 …\libiconv\include\ 中。</li>
+</ol>
+<h3 id="第-4-步"><a href="#第-4-步" class="headerlink" title="第 4 步"></a>第 4 步</h3><p>　　点击菜单 <strong>Project</strong> &gt; <strong>Add Existing item…</strong>，将之前复制到工程文件夹 …\libiconv\libiconv 中的文件加入工程。</p>
+<p><img src="http://onyuwwe9f.bkt.clouddn.com/image/blog/libiconv/3.png" alt=""></p>
+<h3 id="第-5-步"><a href="#第-5-步" class="headerlink" title="第 5 步"></a>第 5 步</h3><p>　　设置工程属性。在设置时，可选择 <strong>All Configurations</strong> 和 <strong>All Platforms</strong>，实际编译生成时，可根据需要选择 Debug 或 Release，x86 或 x64。</p>
+<p>　　选择 <strong>Configuration Properties</strong> &gt; <strong>General</strong>，设置 <strong>Output Directory</strong> 为 <strong>$(SolutionDir)$(Configuration)_$(Platform)\</strong>，设置 <strong>Intermediate Directory</strong> 为 <strong>$(SolutionDir)obj\$(ProjectName)\$(Configuration)_$(Platform)\</strong>。</p>
+<p><img src="http://onyuwwe9f.bkt.clouddn.com/image/blog/libiconv/4.png" alt=""></p>
+<p>　　选择 <strong>Configuration Properties</strong> &gt; <strong>VC++ Directories</strong>，为 <strong>Include Directories</strong> 添加路径 <strong>..\include</strong>。</p>
+<p><img src="http://onyuwwe9f.bkt.clouddn.com/image/blog/libiconv/5.png" alt=""></p>
+<p>　　选择 <strong>Configuration Properties</strong> &gt; <strong>C/C++</strong> &gt; <strong>Preprocessor</strong>，为 <strong>Preprocessor Definitions</strong> 添加 <strong>BUILDING_LIBICONV</strong> 和 <strong>BUILDING_LIBCHARSET</strong>。</p>
+<p><img src="http://onyuwwe9f.bkt.clouddn.com/image/blog/libiconv/6.png" alt=""></p>
+<p>　　选择 <strong>Configuration Properties</strong> &gt; <strong>C/C++</strong> &gt; <strong>Code Generation</strong>，设置 <strong>Runtime Library</strong> 为 <strong>Multi-threaded(/MT)</strong>。原文指出这里是编译动态库的推荐设置，只编译静态库可根据实际情况设置。</p>
+<p><img src="http://onyuwwe9f.bkt.clouddn.com/image/blog/libiconv/7.png" alt=""></p>
+<p>　　选择 <strong>Configuration Properties</strong> &gt; <strong>C/C++</strong> &gt; <strong>Precompiled Headers</strong>，设置 <strong>Precompiled Header</strong> 为 <strong>Not Using Precompiled Headers</strong>。</p>
+<p><img src="http://onyuwwe9f.bkt.clouddn.com/image/blog/libiconv/8.png" alt=""></p>
+<h3 id="第-6-步"><a href="#第-6-步" class="headerlink" title="第 6 步"></a>第 6 步</h3><p>　　需要对源代码进行一些修改。</p>
+<p><strong>libiconv.rc</strong></p>
+<p>　　在第 4 行插入代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">define</span> PACKAGE_VERSION_MAJOR       1</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> PACKAGE_VERSION_MINOR       15</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> PACKAGE_VERSION_SUBMINOR    0</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> PACKAGE_VERSION_STRING      <span class="meta-string">"1.15"</span></span></div></pre></td></tr></table></figure>
+<p><strong>localcharset.c</strong></p>
+<p>　　注释 81 - 83 行：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/* Get LIBDIR.  */</span></div><div class="line"><span class="comment">//#ifndef LIBDIR</span></div><div class="line"><span class="comment">//# include "configmake.h"</span></div><div class="line"><span class="comment">//#endif</span></div></pre></td></tr></table></figure>
+<p><strong>iconv.c</strong></p>
+<p>　　修改 250 - 252 行：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//size_t iconv (iconv_t icd,</span></div><div class="line"><span class="comment">//              ICONV_CONST char* * inbuf, size_t *inbytesleft,</span></div><div class="line"><span class="comment">//              char* * outbuf, size_t *outbytesleft)</span></div><div class="line"><span class="keyword">size_t</span> iconv(<span class="keyword">iconv_t</span> icd,</div><div class="line">             <span class="keyword">const</span> <span class="keyword">char</span>* * inbuf, <span class="keyword">size_t</span> *inbytesleft,</div><div class="line">             <span class="keyword">char</span>* * outbuf, <span class="keyword">size_t</span> *outbytesleft)</div></pre></td></tr></table></figure>
+<p><strong>localcharset.h</strong></p>
+<p>　　修改 21 - 25 行：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//#if @HAVE_VISIBILITY@ &amp;&amp; BUILDING_LIBCHARSET</span></div><div class="line"><span class="comment">//#define LIBCHARSET_DLL_EXPORTED __attribute__((__visibility__("default")))</span></div><div class="line"><span class="comment">//#else</span></div><div class="line"><span class="comment">//#define LIBCHARSET_DLL_EXPORTED</span></div><div class="line"><span class="comment">//#endif</span></div><div class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> BUILDING_LIBCHARSET</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> LIBCHARSET_DLL_EXPORTED __declspec(dllexport)</span></div><div class="line"><span class="meta">#<span class="meta-keyword">elif</span> USING_STATIC_LIBICONV</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> LIBCHARSET_DLL_EXPORTED</span></div><div class="line"><span class="meta">#<span class="meta-keyword">else</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> LIBCHARSET_DLL_EXPORTED __declspec(dllimport)</span></div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div></pre></td></tr></table></figure>
+<p><strong>config.h</strong></p>
+<p>　　在 <strong>…\libiconv\include\</strong> 中打开，注释 30 行：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/* Define as good substitute value for EILSEQ. */</span></div><div class="line"><span class="comment">//#undef EILSEQ</span></div></pre></td></tr></table></figure>
+<p><strong>iconv.h</strong></p>
+<p>　　在 <strong>…\libiconv\include\</strong> 中打开，修改 174 行：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//#if @HAVE_WCHAR_T@</span></div><div class="line"><span class="meta">#<span class="meta-keyword">if</span> HAVE_WCHAR_T</span></div></pre></td></tr></table></figure>
+<p>　　修改 127 行：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//#if @USE_MBSTATE_T@</span></div><div class="line"><span class="meta">#<span class="meta-keyword">if</span> USE_MBSTATE_T</span></div></pre></td></tr></table></figure>
+<p>　　修改 106 - 107 行：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//#if @USE_MBSTATE_T@</span></div><div class="line"><span class="comment">//#if @BROKEN_WCHAR_H@</span></div><div class="line"><span class="meta">#<span class="meta-keyword">if</span> USE_MBSTATE_T</span></div><div class="line"><span class="meta">#<span class="meta-keyword">if</span> BROKEN_WCHAR_H</span></div></pre></td></tr></table></figure>
+<p>　　修改 88 行：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//extern LIBICONV_DLL_EXPORTED size_t iconv (iconv_t cd, @ICONV_CONST@ char* * inbuf, size_t *inbytesleft, char* * outbuf, size_t *outbytesleft);</span></div><div class="line"><span class="function"><span class="keyword">extern</span> LIBICONV_DLL_EXPORTED size_t <span class="title">iconv</span> <span class="params">(<span class="keyword">iconv_t</span> cd, <span class="keyword">const</span> <span class="keyword">char</span>* * inbuf, <span class="keyword">size_t</span> *inbytesleft, <span class="keyword">char</span>* * outbuf, <span class="keyword">size_t</span> *outbytesleft)</span></span>;</div></pre></td></tr></table></figure>
+<p>　　修改 25 - 30 行：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//#if @HAVE_VISIBILITY@ &amp;&amp; BUILDING_LIBICONV</span></div><div class="line"><span class="comment">//#define LIBICONV_DLL_EXPORTED __attribute__((__visibility__("default")))</span></div><div class="line"><span class="comment">//#else</span></div><div class="line"><span class="comment">//#define LIBICONV_DLL_EXPORTED</span></div><div class="line"><span class="comment">//#endif</span></div><div class="line"><span class="comment">//extern LIBICONV_DLL_EXPORTED @DLL_VARIABLE@ int _libiconv_version; /* Likewise */</span></div><div class="line"><span class="meta">#<span class="meta-keyword">if</span> BUILDING_LIBICONV</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> LIBICONV_DLL_EXPORTED __declspec(dllexport)</span></div><div class="line"><span class="meta">#<span class="meta-keyword">elif</span> USING_STATIC_LIBICONV</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> LIBICONV_DLL_EXPORTED</span></div><div class="line"><span class="meta">#<span class="meta-keyword">else</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> LIBICONV_DLL_EXPORTED __declspec(dllimport)</span></div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div><div class="line"><span class="keyword">extern</span> LIBICONV_DLL_EXPORTED <span class="keyword">int</span> _libiconv_version;</div></pre></td></tr></table></figure>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>　　使用时，需要 …\libiconv\include\ 中的 <strong>iconv.h</strong>。根据使用需要，可在编译生成的输出文件夹中找到 <strong>libiconv.lib</strong> 和 <strong>libiconv.dll</strong>。</p>
+<h2 id="许可"><a href="#许可" class="headerlink" title="许可"></a>许可</h2><p>　　鉴于本文是照搬的，为尊重原文，与原文一样，本文及其相关的代码遵循 <a href="http://www.opensource.org/licenses/lgpl-3.0.html" target="_blank" rel="external">The GNU Lesser General Public License (LGPLv3)</a>。</p>
+<h2 id="原文"><a href="#原文" class="headerlink" title="原文"></a>原文</h2><p><a href="https://www.codeproject.com/articles/302012/how-to-build-libiconv-with-microsoft-visual-studio" target="_blank" rel="external">How to Build libiconv with Microsoft Visual Studio</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/编译/" rel="tag"># 编译</a>
+          
+            <a href="/tags/libiconv/" rel="tag"># libiconv</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/07/vc-freexl/" rel="next" title="MSVC 编译生成 FreeXL">
+                <i class="fa fa-chevron-left"></i> MSVC 编译生成 FreeXL
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://onyuwwe9f.bkt.clouddn.com/image/face.jpg"
+               alt="呆脑兽" />
+          <p class="site-author-name" itemprop="name">呆脑兽</p>
+           
+              <p class="site-description motion-element" itemprop="description">反正这就是人生</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/kongyl" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/kongyl" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#版本"><span class="nav-number">1.</span> <span class="nav-text">版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译生成"><span class="nav-number">2.</span> <span class="nav-text">编译生成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#第-1-步"><span class="nav-number">2.1.</span> <span class="nav-text">第 1 步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第-2-步"><span class="nav-number">2.2.</span> <span class="nav-text">第 2 步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第-3-步"><span class="nav-number">2.3.</span> <span class="nav-text">第 3 步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第-4-步"><span class="nav-number">2.4.</span> <span class="nav-text">第 4 步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第-5-步"><span class="nav-number">2.5.</span> <span class="nav-text">第 5 步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第-6-步"><span class="nav-number">2.6.</span> <span class="nav-text">第 6 步</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">3.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#许可"><span class="nav-number">4.</span> <span class="nav-text">许可</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原文"><span class="nav-number">5.</span> <span class="nav-text">原文</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-globe"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">呆脑兽</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdn.staticfile.org/jquery/2.2.4/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdn.staticfile.org/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdn.staticfile.org/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdn.staticfile.org/velocity/1.4.3/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdn.staticfile.org/velocity/1.4.3/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdn.staticfile.org/fancybox/3.0.47/jquery.fancybox.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

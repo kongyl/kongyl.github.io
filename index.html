@@ -1439,7 +1439,8 @@
         
           <p>　　最近需要用到 <a href="http://www.gaia-gis.it/gaia-sins/">spatialite</a>，打算在 Windows 下自己编译 libspatialite。官网上有 <a href="http://www.gaia-gis.it/gaia-sins/mingw_how_to.html">MinGW how-to</a>、 <a href="http://www.gaia-gis.it/gaia-sins/mingw64_how_to.html">MinGW64 how-to</a> 和 <a href="http://www.gaia-gis.it/gaia-sins/msvc_how_to.html">MSVC how-to</a> 的教程。由于个人喜好，选择用 MSVC。实际操作起来，才发现官方的教程，基于 <a href="http://osgeo4w.osgeo.org/">OSGeo4W</a>，描述过于简略。当然，如果只是实际使用，还是强烈推荐 <a href="http://osgeo4w.osgeo.org/">OSGeo4W</a>，不用自己编译，安装后有现成的静态库和动态库可供使用。但既然打算自己编译，还是想从依赖库开始。折腾了好久，这里做一个记录。</p>
 <p>　　其实折腾最久的就是刚开始编译的这个 <a href="http://www.gnu.org/software/libiconv/">libiconv</a>。libiconv 从貌似从版本 1.11 以后就不支持 namke 编译了。本来都放弃了自己喜欢用最新稳定版这个陋习，打算勉强用 1.11 这个版本，结果在 VS 2015 下还编译失败了。好在找到了 《<a href="https://www.codeproject.com/articles/302012/how-to-build-libiconv-with-microsoft-visual-studio">How to Build libiconv with Microsoft Visual Studio</a>》，并且按照此文的方法也能够编译目前最新的 1.15 版本。</p>
-<h2 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h2><p><strong>Visual Studio:</strong> 2015<br><strong>libiconv:</strong> 1.15</p>
+<h2 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h2><p><strong>Visual Studio:</strong> 2015</p>
+<p><strong>libiconv:</strong> 1.15</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/04/06/vc-iconv/#more" rel="contents">

@@ -99,7 +99,6 @@
 <meta property="og:site_name" content="呆脑兽的博客">
 <meta property="og:description" content="最近需要用到 spatialite，打算在 Windows 下自己编译 libspatialite。官网上有 MinGW how-to、 MinGW64 how-to 和 MSVC how-to 的教程。由于个人喜好，选择用 MSVC。实际操作起来，才发现官方的教程，基于 OSGeo4W，描述过于简略。当然，如果只是实际使用，还是强烈推荐 OSGeo4W，不用自己编译，安装后有现成的静态库和动">
 <meta property="og:image" content="http://kongyl.s1.natapp.cc/images/vc-iconv/1.png">
-<meta property="og:image" content="http://kongyl.s1.natapp.cc/2017/04/06/vc-iconv/1.png">
 <meta property="og:image" content="http://kongyl.s1.natapp.cc/images/vc-iconv/2.png">
 <meta property="og:image" content="http://kongyl.s1.natapp.cc/images/vc-iconv/3.png">
 <meta property="og:image" content="http://kongyl.s1.natapp.cc/images/vc-iconv/4.png">
@@ -107,7 +106,7 @@
 <meta property="og:image" content="http://kongyl.s1.natapp.cc/images/vc-iconv/6.png">
 <meta property="og:image" content="http://kongyl.s1.natapp.cc/images/vc-iconv/7.png">
 <meta property="og:image" content="http://kongyl.s1.natapp.cc/images/vc-iconv/8.png">
-<meta property="og:updated_time" content="2017-04-19T04:30:11.244Z">
+<meta property="og:updated_time" content="2017-04-19T04:32:57.154Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Microsoft Visual Studio 编译生成 libiconv">
 <meta name="twitter:description" content="最近需要用到 spatialite，打算在 Windows 下自己编译 libspatialite。官网上有 MinGW how-to、 MinGW64 how-to 和 MSVC how-to 的教程。由于个人喜好，选择用 MSVC。实际操作起来，才发现官方的教程，基于 OSGeo4W，描述过于简略。当然，如果只是实际使用，还是强烈推荐 OSGeo4W，不用自己编译，安装后有现成的静态库和动">
@@ -418,7 +417,7 @@
 <a id="more"></a>
 <h2 id="编译生成"><a href="#编译生成" class="headerlink" title="编译生成"></a>编译生成</h2><h3 id="第-1-步"><a href="#第-1-步" class="headerlink" title="第 1 步"></a>第 1 步</h3><p>　　<a href="https://ftp.gnu.org/pub/gnu/libiconv/" target="_blank" rel="external">下载</a> libiconv。原教程版本是 1.14，这里用的 1.15 也能成功生成，其他版本没有实际测试过。</p>
 <h3 id="第-2-步"><a href="#第-2-步" class="headerlink" title="第 2 步"></a>第 2 步</h3><p>　　用 Visual Studio 新建 Win32 工程，这里命名工程为 libiconv。在设置向导中选择 <strong>Application type</strong> 为 <strong>DLL</strong>，并在 <strong>Additional options</strong> 中勾选 <strong>Empty project</strong>。</p>
-<p><img src="/images/vc-iconv/1.png" alt=""><br><img src="/2017/04/06/vc-iconv/1.png" alt="test" title="test"></p>
+<p><img src="/images/vc-iconv/1.png" alt=""></p>
 <p><img src="/images/vc-iconv/2.png" alt=""></p>
 <h3 id="第-3-步"><a href="#第-3-步" class="headerlink" title="第 3 步"></a>第 3 步</h3><p>　　解压下载的 libiconv-1.15.tar.gz。复制以下文件：</p>
 <ol>

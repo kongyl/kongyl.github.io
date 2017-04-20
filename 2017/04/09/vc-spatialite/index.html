@@ -98,7 +98,7 @@
 <meta property="og:url" content="http://kongyl.github.io/2017/04/09/vc-spatialite/index.html">
 <meta property="og:site_name" content="呆脑兽的博客">
 <meta property="og:description" content="折腾了这么多依赖库，终于能够编译生成 libspatialite 了。 版本 Visual Studio: 2015  libspatialite: 4.3.0a">
-<meta property="og:updated_time" content="2017-04-19T12:19:38.513Z">
+<meta property="og:updated_time" content="2017-04-20T08:59:18.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MSVC 编译生成 libspatialite">
 <meta name="twitter:description" content="折腾了这么多依赖库，终于能够编译生成 libspatialite 了。 版本 Visual Studio: 2015  libspatialite: 4.3.0a">
@@ -412,21 +412,21 @@
 <p><strong> libspatialite:</strong> 4.3.0a</p>
 <a id="more"></a>
 <h2 id="编译生成依赖库"><a href="#编译生成依赖库" class="headerlink" title="编译生成依赖库"></a>编译生成依赖库</h2><p>　　libspatialite 的编译默认安装了 OSGeo4W，为了不修改 makefile.vc 文件，可将自己编译生成的依赖库复制到 C:\OSGeo4W\ 中。</p>
-<h3 id="iconv"><a href="#iconv" class="headerlink" title="iconv"></a><strong>iconv</strong></h3><p>　　编译生成可参考 <a href="http://kongyl.s1.natapp.cc/2017/04/06/vc-iconv/" target="_blank" rel="external">Microsoft Visual Studio 编译生成 libiconv</a>。</p>
+<h3 id="iconv"><a href="#iconv" class="headerlink" title="iconv"></a><strong>iconv</strong></h3><p>　　编译生成可参考 <a href="/2017/04/06/vc-iconv/">Microsoft Visual Studio 编译生成 libiconv</a>。</p>
 <p>　　将 …\libiconv\inlude\ 中的 <strong>iconv.h</strong> 复制到 C:\OSGeo4W\include\ 中。将生成的 <strong>libiconv.lib</strong> 复制到 C:\OSGeo4W\lib\ 中，并重名为 <strong>iconv.lib</strong>。</p>
-<h3 id="freexl"><a href="#freexl" class="headerlink" title="freexl"></a><strong>freexl</strong></h3><p>　　编译生成可参考 <a href="http://kongyl.s1.natapp.cc/2017/04/07/vc-freexl/" target="_blank" rel="external">MSVC 编译生成 FreeXL</a>。</p>
+<h3 id="freexl"><a href="#freexl" class="headerlink" title="freexl"></a><strong>freexl</strong></h3><p>　　编译生成可参考 <a href="/2017/04/07/vc-freexl/">MSVC 编译生成 FreeXL</a>。</p>
 <p>　　将 ${INSTDIR}\include\ 中的 <strong>freexl.h</strong> 复制到 C:\OSGeo4W\include\ 中。将 ${INSTDIR}\lib\ 中的 <strong>freexl_i.lib</strong> 复制到 C:\OSGeo4W\lib\ 中。</p>
-<h3 id="sqlite"><a href="#sqlite" class="headerlink" title="sqlite"></a><strong>sqlite</strong></h3><p>　　编译生成可参考 <a href="http://kongyl.s1.natapp.cc/2017/04/07/vc-sqlite3/" target="_blank" rel="external">MSVC 编译生成 SQLite3</a>。</p>
+<h3 id="sqlite"><a href="#sqlite" class="headerlink" title="sqlite"></a><strong>sqlite</strong></h3><p>　　编译生成可参考 <a href="/2017/04/07/vc-sqlite3/">MSVC 编译生成 SQLite3</a>。</p>
 <p>　　将 ${INSTDIR}\include\ 目录下的 <strong>sqlite3.h</strong> 和 <strong>sqlite3ext.h</strong> 复制到 C:\OSGeo4W\include\ 中。将 ${INSTDIR}\lib\ 目录中的 <strong>sqlite3_i.lib</strong> 复制到 C:\OSGeo4W\lib\ 中。</p>
-<h3 id="zlib"><a href="#zlib" class="headerlink" title="zlib"></a><strong>zlib</strong></h3><p>　　编译生成可参考 <a href="http://kongyl.s1.natapp.cc/2017/04/07/vc-zlib/" target="_blank" rel="external">Microsoft Visual Studio 编译生成 zlib</a>。</p>
+<h3 id="zlib"><a href="#zlib" class="headerlink" title="zlib"></a><strong>zlib</strong></h3><p>　　编译生成可参考 <a href="/2017/04/07/vc-zlib/">Microsoft Visual Studio 编译生成 zlib</a>。</p>
 <p>　　将 …\zlib-1.2.11\ 中的 <strong>zlib.h</strong> 和 <strong>zconf.h</strong> 这 2 个头文件复制到 C:\OSGeo4W\include\ 中。对于参考上文编译生成 64 位的，将 …\zlib-1.2.11\contrib\vstudio\vc14\x64\ZlibDllRelease 生成的 <strong>zlibwapi.lib</strong> 复制到 C:\OSGeo4W\lib\ 中，并重命名为 <strong>zlib.lib</strong>；对于参考上文编译生产 32 位的，将 …\zlib-1.2.11\ 文件夹中的 <strong>zdll.lib</strong> 复制到 C:\OSGeo4W\lib\ 中，并重命名为 <strong>zlib.lib</strong>。</p>
 <p>　　编辑 <strong>zconf.h</strong>，注释 434 - 436 行：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//#ifdef HAVE_UNISTD_H    /* may be set to #if 1 by ./configure */</span></div><div class="line"><span class="comment">//#  define Z_HAVE_UNISTD_H</span></div><div class="line"><span class="comment">//#endif</span></div></pre></td></tr></table></figure>
-<h3 id="goes"><a href="#goes" class="headerlink" title="goes"></a><strong>goes</strong></h3><p>　　编译生成可参考 <a href="http://kongyl.s1.natapp.cc/2017/04/07/vc-geos/" target="_blank" rel="external">MSVC 编译 GEOS</a>。</p>
+<h3 id="goes"><a href="#goes" class="headerlink" title="goes"></a><strong>goes</strong></h3><p>　　编译生成可参考 <a href="/2017/04/07/vc-geos/">MSVC 编译 GEOS</a>。</p>
 <p>　　将 …\geos-3.6.1\capi\ 中的 <strong>geos_c.h</strong> 复制到 C:\OSGeo4W\include\ 中。将 …\geos-3.6.1\src\ 中的 <strong>geos_c_i.lib</strong> 复制到 C:\OSGeo4W\lib\ 中，并重命名为 <strong>geos_c.lib</strong>。</p>
-<h3 id="proj-4"><a href="#proj-4" class="headerlink" title="proj.4"></a><strong>proj.4</strong></h3><p>　　编译生成可参考 <a href="http://kongyl.s1.natapp.cc/2017/04/09/vc-proj/" target="_blank" rel="external">MSVC 编译生成 proj.4</a>。</p>
+<h3 id="proj-4"><a href="#proj-4" class="headerlink" title="proj.4"></a><strong>proj.4</strong></h3><p>　　编译生成可参考 <a href="/2017/04/09/vc-proj/">MSVC 编译生成 proj.4</a>。</p>
 <p>　　将 ${INSTDIR}\include\ 中的 <strong>proj_api.h</strong> 复制到 C:\OSGeo4W\include\ 中。将 ${INSTDIR}\lib\ 中的 <strong>proj_i.lib</strong> 复制到 C:\OSGeo4W\lib\ 中。</p>
-<h3 id="libxml2"><a href="#libxml2" class="headerlink" title="libxml2"></a><strong>libxml2</strong></h3><p>　　编译生成可参考 <a href="http://kongyl.s1.natapp.cc/2017/04/09/vc-libxml/" target="_blank" rel="external">MSVC 编译 libxml2</a>。</p>
+<h3 id="libxml2"><a href="#libxml2" class="headerlink" title="libxml2"></a><strong>libxml2</strong></h3><p>　　编译生成可参考 <a href="/2017/04/09/vc-libxml/">MSVC 编译 libxml2</a>。</p>
 <p>　　将 ${prefix}\include\libxml2\ 中的 <strong>libxml</strong> 文件夹复制到 C:\OSGeo4W\include\ 中。将 ${INSTDIR}\lib\ 中的 <strong>libxml2.lib</strong> 复制到 C:\OSGeo4W\lib\ 中。</p>
 <h2 id="编译生成"><a href="#编译生成" class="headerlink" title="编译生成"></a>编译生成</h2><h3 id="第-1-步"><a href="#第-1-步" class="headerlink" title="第 1 步"></a>第 1 步</h3><p>　　<a href="http://www.gaia-gis.it/gaia-sins/libspatialite-sources/" target="_blank" rel="external">下载</a> <a href="http://www.gaia-gis.it/gaia-sins/libspatialite-sources/libspatialite-4.3.0a.tar.gz" target="_blank" rel="external">libspatialite-4.3.0a.tar.gz</a>，并解压到目标文件夹。</p>
 <h3 id="第-2-步"><a href="#第-2-步" class="headerlink" title="第 2 步"></a>第 2 步</h3><p>　　编辑 …\libspatial-4.3.0a\src\gaiageo\gg_extras.c。由于 MSVC 不支持 rint() 函数，简单地将 gg_extras.c 代码中所有“rint”替换为“rint1”即可。</p>
@@ -477,6 +477,10 @@
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/19/vc-gdal/" rel="next" title="MSVC 编译生成支持 spatialite 的 GDAL">
+                <i class="fa fa-chevron-left"></i> MSVC 编译生成支持 spatialite 的 GDAL
+              </a>
             
           </div>
 
@@ -581,7 +585,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -603,7 +607,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

@@ -331,7 +331,7 @@
               
                 
                 <a class="post-title-link" href="/2017/04/20/vc-gdal/" itemprop="url">
-                  MSVC 编译生成支持 spatialite 的 GDAL
+                  MSVC 编译生成支持 SpatiaLite 的 GDAL
                 </a>
               
             
@@ -406,9 +406,9 @@
 
       
         
-          <p>　　使用 <a href="http://www.gdal.org/">GDAL</a> 能够非常简便地操作空间数据，并且能够支持 <a href="http://www.gaia-gis.it/gaia-sins/">spatialite</a>，像操作 <a href="https://en.wikipedia.org/wiki/Shapefile">Shapefile</a> 一样操作 spatialite，将精力更多地放在功能的实现上。</p>
-<p>　　在 Windows 下，要想使编译出来的 GDAL 支持 spatialite，需要先有编译好的 libspatialite 库，并修改编译配置项。对于 libspatialite 库，再次强烈推荐 <a href="http://osgeo4w.osgeo.org/">OSGeo4W</a>，不仅能够快速获取相关的 GIS 库，还能自动解决依赖库问题，甚至可以直接获取到编译好的 GDAL 库。</p>
-<p>　　如果希望 GDAL 只依赖所需库，可以自己配置选项并编译 GDAL，如果想尝试自己编译 spatialite 及其依赖库，可以参考<a href="/2017/04/09/vc-spatialite/">《MSVC 编译生成 libspatialite》</a>。本文就是在此一系列前文的编译基础上，介绍如何针对这些自己编译的依赖库，修改配置文件，编译生成和使用 GDAL。当然，如果依赖库是从 OSGeo4W 获取或直接下载的，配置也是类似的。</p>
+          <p>　　使用 <a href="http://www.gdal.org/">GDAL</a> 能够非常简便地操作空间数据，并且能够支持 <a href="http://www.gaia-gis.it/gaia-sins/">SpatiaLite</a>，像操作 <a href="https://en.wikipedia.org/wiki/Shapefile">Shapefile</a> 一样操作 SpatiaLite，将精力更多地放在功能的实现上。</p>
+<p>　　在 Windows 下，要想使编译出来的 GDAL 支持 SpatiaLite，需要先有编译好的 libspatialite 库，并修改编译配置项。对于 libspatialite 库，再次强烈推荐 <a href="http://osgeo4w.osgeo.org/">OSGeo4W</a>，不仅能够快速获取相关的 GIS 库，还能自动解决依赖库问题，甚至可以直接获取到编译好的 GDAL 库。</p>
+<p>　　如果希望 GDAL 只依赖所需库，可以自己配置选项并编译 GDAL，如果想尝试自己编译 SpatiaLite 及其依赖库，可以参考<a href="/2017/04/09/vc-spatialite/">《MSVC 编译生成 libspatialite》</a>。本文就是在此一系列前文的编译基础上，介绍如何针对这些自己编译的依赖库，修改配置文件，编译生成和使用 GDAL。当然，如果依赖库是从 OSGeo4W 获取或直接下载的，配置也是类似的。</p>
 <h2 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h2><p><strong>Visual Studio:</strong> 2015</p>
 <p><strong>GDAL:</strong> 2.1.3</p>
 <p><strong>libspatialite:</strong> 4.3.0a</p>
@@ -708,7 +708,8 @@
       
         
           <p>　　<a href="http://xmlsoft.org/">libxml2</a> 是 xml 程序库，也是 libspatialite 的依赖库之一。</p>
-<h2 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h2><p><strong>Visual Studio:</strong> 2015<br><strong>libxml2:</strong> 2.9.4</p>
+<h2 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h2><p><strong>Visual Studio:</strong> 2015</p>
+<p><strong>libxml2:</strong> 2.9.4</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/04/09/vc-libxml/#more" rel="contents">
@@ -856,7 +857,8 @@
       
         
           <p>　　<a href="http://proj4.org/">proj.4</a> 是地图投影库，也是 libspatialite 的依赖库之一。</p>
-<h2 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h2><p><strong>Visual Studio:</strong> 2015<br><strong>proj.4:</strong> 4.9.3</p>
+<h2 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h2><p><strong>Visual Studio:</strong> 2015</p>
+<p><strong>proj.4:</strong> 4.9.3</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/04/09/vc-proj/#more" rel="contents">
@@ -1004,7 +1006,8 @@
       
         
           <p>　　<a href="https://geos.osgeo.org/">GEOS</a> 是空间操作库，也是 libspatialite 的依赖库之一。</p>
-<h2 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h2><p><strong>Visual Studio:</strong> 2015<br><strong>geos: </strong> 3.6.1</p>
+<h2 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h2><p><strong>Visual Studio:</strong> 2015</p>
+<p><strong>GEOS: </strong> 3.6.1</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/04/07/vc-geos/#more" rel="contents">
@@ -1300,8 +1303,9 @@
 
       
         
-          <p>　　spatialite 可以说是 <a href="http://www.sqlite.org/">SQLite</a> 的空间扩展，要编译 libspatialite 必然需要先编译 sqlite。</p>
-<h2 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h2><p><strong>Visual Studio:</strong> 2015<br><strong>sqlite:</strong> 3.18.0</p>
+          <p>　　SpatiaLite 可以说是 <a href="http://www.sqlite.org/">SQLite</a> 的空间扩展，要编译 libspatialite 必然需要先编译 SQLite。</p>
+<h2 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h2><p><strong>Visual Studio:</strong> 2015</p>
+<p><strong>SQLite:</strong> 3.18.0</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/04/07/vc-sqlite3/#more" rel="contents">
@@ -1449,7 +1453,8 @@
       
         
           <p>　　<a href="https://www.gaia-gis.it/fossil/freexl/index">FreeXL</a> 是 libspatialite 的一个依赖，是一个从 Excel (.xls) 中提取有效数据的开源库。目前最新版本为 <a href="http://www.gaia-gis.it/gaia-sins/freexl-1.0.2.tar.gz">1.0.2</a>。</p>
-<h2 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h2><p><strong>Visual Studio:</strong> 2015<br><strong>freexl:</strong> 1.0.2</p>
+<h2 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h2><p><strong>Visual Studio:</strong> 2015</p>
+<p><strong>FreeXL:</strong> 1.0.2</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/04/07/vc-freexl/#more" rel="contents">

@@ -75,7 +75,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="编译,freexl," />
+  <meta name="keywords" content="编译,FreeXL," />
 
 
 
@@ -91,17 +91,17 @@
 
 
 
-<meta name="description" content="FreeXL 是 libspatialite 的一个依赖，是一个从 Excel (.xls) 中提取有效数据的开源库。目前最新版本为 1.0.2。 版本Visual Studio: 2015freexl: 1.0.2">
-<meta name="keywords" content="编译,freexl">
+<meta name="description" content="FreeXL 是 libspatialite 的一个依赖，是一个从 Excel (.xls) 中提取有效数据的开源库。目前最新版本为 1.0.2。 版本Visual Studio: 2015 FreeXL: 1.0.2">
+<meta name="keywords" content="编译,FreeXL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MSVC 编译生成 FreeXL">
 <meta property="og:url" content="http://kongyl.github.io/2017/04/07/vc-freexl/index.html">
 <meta property="og:site_name" content="呆脑兽的博客">
-<meta property="og:description" content="FreeXL 是 libspatialite 的一个依赖，是一个从 Excel (.xls) 中提取有效数据的开源库。目前最新版本为 1.0.2。 版本Visual Studio: 2015freexl: 1.0.2">
-<meta property="og:updated_time" content="2017-04-07T05:22:47.374Z">
+<meta property="og:description" content="FreeXL 是 libspatialite 的一个依赖，是一个从 Excel (.xls) 中提取有效数据的开源库。目前最新版本为 1.0.2。 版本Visual Studio: 2015 FreeXL: 1.0.2">
+<meta property="og:updated_time" content="2017-04-21T01:42:55.771Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MSVC 编译生成 FreeXL">
-<meta name="twitter:description" content="FreeXL 是 libspatialite 的一个依赖，是一个从 Excel (.xls) 中提取有效数据的开源库。目前最新版本为 1.0.2。 版本Visual Studio: 2015freexl: 1.0.2">
+<meta name="twitter:description" content="FreeXL 是 libspatialite 的一个依赖，是一个从 Excel (.xls) 中提取有效数据的开源库。目前最新版本为 1.0.2。 版本Visual Studio: 2015 FreeXL: 1.0.2">
 
 
 
@@ -408,9 +408,10 @@
 
       
         <p>　　<a href="https://www.gaia-gis.it/fossil/freexl/index" target="_blank" rel="external">FreeXL</a> 是 libspatialite 的一个依赖，是一个从 Excel (.xls) 中提取有效数据的开源库。目前最新版本为 <a href="http://www.gaia-gis.it/gaia-sins/freexl-1.0.2.tar.gz" target="_blank" rel="external">1.0.2</a>。</p>
-<h2 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h2><p><strong>Visual Studio:</strong> 2015<br><strong>freexl:</strong> 1.0.2</p>
+<h2 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h2><p><strong>Visual Studio:</strong> 2015</p>
+<p><strong>FreeXL:</strong> 1.0.2</p>
 <a id="more"></a>
-<h2 id="编译生成"><a href="#编译生成" class="headerlink" title="编译生成"></a>编译生成</h2><h3 id="第-1-步"><a href="#第-1-步" class="headerlink" title="第 1 步"></a>第 1 步</h3><p>　　freexl 依赖于 libiconv，首先需要 libiconv。想要自己编译生成可参考《<a href="/2017/04/06/vc-iconv/">Microsoft Visual Studio 编译生成 libiconv</a>》。</p>
+<h2 id="编译生成"><a href="#编译生成" class="headerlink" title="编译生成"></a>编译生成</h2><h3 id="第-1-步"><a href="#第-1-步" class="headerlink" title="第 1 步"></a>第 1 步</h3><p>　　FreeXL 依赖于 libiconv，首先需要 libiconv。想要自己编译生成可参考《<a href="/2017/04/06/vc-iconv/">Microsoft Visual Studio 编译生成 libiconv</a>》。</p>
 <h3 id="第-2-步"><a href="#第-2-步" class="headerlink" title="第 2 步"></a>第 2 步</h3><p>　　<a href="http://www.gaia-gis.it/gaia-sins/freexl-sources/" target="_blank" rel="external">下载</a> <a href="http://www.gaia-gis.it/gaia-sins/freexl-sources/freexl-1.0.2.tar.gz" target="_blank" rel="external">freexl-1.0.2.tar.gz</a> 并解压。</p>
 <p>　　freexl 默认的生成路径为 C:\OSGeo4W，如果想更改生成路径，可编辑 nmake.opt，修改 INSTDIR 指向目标路径。</p>
 <p>　　freexl 默认编译基于 OSGeo4W，因此 makefile.vc 中对 libiconv 的依赖默认指向 C:\OSGeo4W\include\iconv.h 和 C:\OSGeo4W\lib\iconv.lib。可通过修改 makefile.vc 文件指向自己的路径，也可将编译生成的 libiconv 相关文件复制到 C:\OSGeo4W 中。这里推荐后者，因为libspatialite 默认链接路径也是 C:\OSGeo4W。如果在第 1 步中根据《<a href="/2017/04/06/vc-iconv/">Microsoft Visual Studio 编译生成 libiconv</a>》自己手动编译生成 libiconv，需要将 …\libiconv\include 中的 <strong>iconv.h</strong> 复制到 C:\OSGeo4W 中；把编译生成的 libiconv.lib 复制到 C:\OSGeo4W 中，并重命名为 <strong>iconv.lib</strong>。</p>
@@ -449,7 +450,7 @@
           
             <a href="/tags/编译/" rel="tag"># 编译</a>
           
-            <a href="/tags/freexl/" rel="tag"># freexl</a>
+            <a href="/tags/FreeXL/" rel="tag"># FreeXL</a>
           
         </div>
       
